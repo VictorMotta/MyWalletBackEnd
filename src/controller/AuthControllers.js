@@ -67,3 +67,22 @@ export async function signIn(req, res) {
         res.status(500).send(error.message);
     }
 }
+
+export async function logoutUser(req, res) {
+    const { authorization } = req.headers;
+    const token = authorization?.replace("Bearer ", "");
+
+    try {
+        const checkUser = await db.collection("sessions").findOne({ token });
+
+        if (!checkUser) {
+            return res.sendStatus(403);
+        }
+
+        await db.collection("sessions").deleteOne({ token });
+
+        return res.send(200);
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}
