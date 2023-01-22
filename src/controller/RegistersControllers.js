@@ -34,6 +34,32 @@ export async function sendRegisters(req, res) {
     }
 }
 
+export async function updateRegister(req, res) {
+    const { idRegister } = req.params;
+    const { description, value, type } = req.body;
+    const checkUser = res.locals.session;
+
+    const checkIdExist = await db.collection("registers").findOne({ _id: ObjectId(idRegister) });
+
+    if (String(checkIdExist.idUser) !== String(checkUser.idUser)) {
+        return res.sendStatus(401);
+    }
+
+    try {
+        const result = await db
+            .collection("registers")
+            .updateOne({ _id: ObjectId(idRegister) }, { $set: { description, value, type } });
+
+        if (result.modifiedCount === 0) return res.status(404).send("Esse registro não existe!");
+
+        console.log(result);
+
+        res.send("Registro Atualizado!");
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+
 export async function deleteRegister(req, res) {
     const { idRegister } = req.params;
     const checkUser = res.locals.session;
