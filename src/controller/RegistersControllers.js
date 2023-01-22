@@ -1,6 +1,5 @@
+import { ObjectId } from "mongodb";
 import db from "../config/database.js";
-import { sendRegistersSchema } from "../schemas/RegistersSchemas.js";
-import dayjs from "dayjs";
 
 export async function getRegisters(req, res) {
     const checkUser = res.locals.session;
@@ -32,5 +31,27 @@ export async function sendRegisters(req, res) {
     } catch (error) {
         console.log(error.message);
         return res.sendStatus(500);
+    }
+}
+
+export async function deleteRegister(req, res) {
+    const { idRegister } = req.params;
+    const checkUser = res.locals.session;
+
+    const checkIdExist = await db.collection("registers").findOne({ _id: ObjectId(idRegister) });
+
+    if (!checkIdExist) {
+        return res.sendStatus(404);
+    }
+    if (String(checkIdExist.idUser) !== String(checkUser.idUser)) {
+        return res.sendStatus(401);
+    }
+
+    try {
+        await db.collection("registers").deleteOne({ _id: ObjectId(idRegister) });
+
+        res.send("Deletado com sucesso!");
+    } catch (error) {
+        res.status(500).send(error);
     }
 }
