@@ -1,5 +1,6 @@
 import db from "../config/database.js";
 import { sendRegistersSchema } from "../schemas/RegistersSchemas.js";
+import dayjs from "dayjs";
 
 export async function getRegisters(req, res) {
     const { authorization } = req.headers;

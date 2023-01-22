@@ -38,11 +38,12 @@ export async function signUp(req, res) {
 
 export async function signIn(req, res) {
     const { email, password } = req.body;
+    const token = uuid();
 
     const validation = loginSchema.validate({ email, password }, { abortEarly: false });
 
     if (validation.error) {
-        const errors = validation.error.details.map((detail) => detail.message);
+        const errors = validation.error.details.map((detail) => detail);
         return res.status(422).send(errors);
     }
 
@@ -54,14 +55,27 @@ export async function signIn(req, res) {
             const tokenExist = await db.collection("sessions").findOne({ idUser: user._id });
 
             if (!tokenExist) {
-                const token = uuid();
-                await db.collection("sessions").insertOne({ idUser: user._id, token });
-                return res.send(token);
-            }
+                console.log("entrou token não existe");
 
-            return res.send(tokenExist.token);
+                await db.collection("sessions").insertOne({ idUser: user._id, token });
+
+                const bodyTokenNoExist = {
+                    ...user,
+                    token: token,
+                };
+                delete bodyTokenNoExist.password;
+                return res.send(bodyTokenNoExist);
+            }
+            console.log("entrou token existe");
+            const bodyTokenExist = {
+                ...user,
+                token: tokenExist.token,
+            };
+            delete bodyTokenExist.password;
+
+            return res.send(bodyTokenExist);
         } else {
-            res.status(404).send("Usuário não encontrado!!");
+            res.status(404).send("E-mail ou senha incorreta!!");
         }
     } catch (error) {
         res.status(500).send(error.message);
