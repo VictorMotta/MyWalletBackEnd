@@ -4,18 +4,6 @@ import { v4 as uuid } from "uuid";
 import db from "../config/database.js";
 
 export async function signUp(req, res) {
-    const { name, email, password, confirmPassword } = req.body;
-
-    const validation = registerUserSchema.validate(
-        { name, email, password, confirmPassword },
-        { abortEarly: false }
-    );
-
-    if (validation.error) {
-        const errors = validation.error.details.map((detail) => detail.message);
-        return res.status(422).send(errors);
-    }
-
     try {
         const checkUserExist = await db.collection("users").findOne({ email });
 
@@ -39,13 +27,6 @@ export async function signUp(req, res) {
 export async function signIn(req, res) {
     const { email, password } = req.body;
     const token = uuid();
-
-    const validation = loginSchema.validate({ email, password }, { abortEarly: false });
-
-    if (validation.error) {
-        const errors = validation.error.details.map((detail) => detail);
-        return res.status(422).send(errors);
-    }
 
     try {
         const user = await db.collection("users").findOne({ email });
@@ -83,17 +64,10 @@ export async function signIn(req, res) {
 }
 
 export async function logoutUser(req, res) {
-    const { authorization } = req.headers;
-    const token = authorization?.replace("Bearer ", "");
+    const checkUser = res.locals.session;
 
     try {
-        const checkUser = await db.collection("sessions").findOne({ token });
-
-        if (!checkUser) {
-            return res.sendStatus(403);
-        }
-
-        await db.collection("sessions").deleteOne({ token });
+        await db.collection("sessions").deleteOne({ token: checkUser.token });
 
         return res.send(200);
     } catch (error) {

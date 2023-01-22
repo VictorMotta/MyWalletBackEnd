@@ -3,14 +3,7 @@ import { sendRegistersSchema } from "../schemas/RegistersSchemas.js";
 import dayjs from "dayjs";
 
 export async function getRegisters(req, res) {
-    const { authorization } = req.headers;
-    const token = authorization?.replace("Bearer ", "");
-
-    const checkUser = await db.collection("sessions").findOne({ token });
-
-    if (!checkUser) {
-        return res.sendStatus(401);
-    }
+    const checkUser = res.locals.session;
 
     try {
         const registersUser = await db
@@ -26,28 +19,11 @@ export async function getRegisters(req, res) {
 }
 
 export async function sendRegisters(req, res) {
-    const { authorization } = req.headers;
-    const token = authorization?.replace("Bearer ", "");
     const { description, value, type } = req.body;
-    const date = new Date();
-
-    const checkUser = await db.collection("sessions").findOne({ token });
-
-    if (!checkUser) {
-        return res.sendStatus(401);
-    }
-
-    const validation = sendRegistersSchema.validate(
-        { description, value, type },
-        { abortEarly: false }
-    );
-
-    if (validation.error) {
-        const errors = validation.error.details.map((detail) => detail.message);
-        return res.status(422).send(errors);
-    }
+    const checkUser = res.locals.session;
 
     try {
+        const date = new Date();
         await db
             .collection("registers")
             .insertOne({ description, value, type, date, idUser: checkUser.idUser });
