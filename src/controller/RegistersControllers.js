@@ -52,8 +52,6 @@ export async function updateRegister(req, res) {
 
         if (result.modifiedCount === 0) return res.status(404).send("Esse registro não existe!");
 
-        console.log(result);
-
         res.send("Registro Atualizado!");
     } catch (error) {
         res.status(500).send(error);
