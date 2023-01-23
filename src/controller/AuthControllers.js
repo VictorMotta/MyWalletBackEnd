@@ -3,6 +3,8 @@ import { v4 as uuid } from "uuid";
 import db from "../config/database.js";
 
 export async function signUp(req, res) {
+    const { name, email, password } = req.body;
+
     try {
         const checkUserExist = await db.collection("users").findOne({ email });
 
