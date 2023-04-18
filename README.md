@@ -101,7 +101,8 @@ The following tools and frameworks were used in the construction of the project:
   ```bash
     mongod --dbpath ~/.mongo
   ```
-  ####. Do not close this terminal! This is mongo server running!
+  + **Do not close this terminal! This is mongo server running!**
+  
 4. Clone this repository
    f2. Clone the front-end repository at https://github.com/VictorMotta/MyWalletFrontEnd.git
 4. Follow instructions to run font-end at https://github.com/VictorMotta/MyWalletFrontEnd.git
