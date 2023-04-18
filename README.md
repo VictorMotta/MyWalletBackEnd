@@ -40,50 +40,59 @@ The following tools and frameworks were used in the construction of the project:
    <details>
    <summary>Mongodb installation</summary>
       <details>
-      <summary>No Ubuntu 20.04</summary>
+      <summary>In Ubuntu 20.04</summary>
 
-   1. Como sei se a minha versão? No terminal digite:
-      ```bash
-      lsb_release -a
-      ```
-   2. Execute os seguintes comandos no terminal:
-      ```bash
-      wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
-      echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
-      sudo apt-get update
-      sudo apt-get install -y mongodb-org
-      mkdir ~/.mongo # os dados do mongo serão armazenados aqui, nos próximos comandos veremos como
-      ```
-   3. Se falhar no primeiro comando, execute os seguintes comandos:
-      ```bash
-      sudo apt-get install gnupg wget
-      ```
-      e tente novamente o primeiro comando.
+   1. How do I know if my version? In the terminal type:
+        
+          
+          lsb_release -a
+          
+        
+   2. Run the following commands in the terminal:
+        
+         
+          wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+          sudo apt-get update
+          sudo apt-get install -y mongodb-org
+          mkdir ~/.mongo # mongo data will be stored here, in the next commands we will see howo
+          
+        
+   3. If the first command fails, run the following commands:
+        
+          
+          sudo apt-get install gnupg wget
+          
+        
+      and try the first command again.
 
+        ___
    </details>
    <details>
-      <summary>No Ubuntu 22.04+</summary>
-      1. Como sei se a minha versão? No terminal digite:
+      <summary>In Ubuntu 22.04+</summary>
+    
+   1. How do I know if my version? In the terminal type:
          
          ```bash
          lsb_release -a
          ```
          
-      2. Execute os seguintes comandos no terminal:
+   2. Run the following commands in the terminal:
          
-         ```bash
-         sudo apt-get install gnupg wget
-         wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
-         echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
-         sudo apt-get update
+        ```bash
+        sudo apt-get install gnupg wget
+        wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+        echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+        sudo apt-get update
          
-         wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
-         
-         sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
-         
-         sudo apt install -y mongodb-org
-         mkdir ~/.mongo # os dados do mongo serão armazenados aqui, nos próximos comandos veremos como
-         ```
+        wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+
+        sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+
+        sudo apt install -y mongodb-org
+        mkdir ~/.mongo # mongo data will be stored here, in the next commands we will see how
+        ```
+        ___
    </details>
 
 </details>
