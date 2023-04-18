@@ -97,27 +97,32 @@ The following tools and frameworks were used in the construction of the project:
 
 </details>
 
-2. Clone this repository
+2. Start Mongodb
+  ```bash
+    mongod --dbpath ~/.mongo
+  ```
+  ####. Do not close this terminal! This is mongo server running!
+4. Clone this repository
    f2. Clone the front-end repository at https://github.com/VictorMotta/MyWalletFrontEnd.git
-3. Follow instructions to run font-end at https://github.com/VictorMotta/MyWalletFrontEnd.git
-4. Install dependencies
+4. Follow instructions to run font-end at https://github.com/VictorMotta/MyWalletFrontEnd.git
+5. Install dependencies
 
 ```bash
 npm i
 ```
 
-5.  Copy and paste the .env.example file and alter name for .env.
+6.  Copy and paste the .env.example file and alter name for .env.
 
-6.  Run the front-end with
+7.  Run the front-end with
 
 ```bash
 npm run dev
 ```
 
-7. You can optionally build the project running
+8. You can optionally build the project running
 
 ```bash
 npm run build
 ```
 
-8. Finally, copy the following link: http://localhost:5000/database_name and paste it in the front end .env following the .env.example instructions
+9. Finally, copy the following link: http://localhost:5000/database_name and paste it in the front end .env following the .env.example instructions
